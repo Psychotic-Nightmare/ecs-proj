@@ -36,14 +36,14 @@ jobs:
           echo "ECR Registry: ${{ secrets.AWS_ECR_REGISTRY }}"
           docker push 317327656978.dkr.ecr.us-east-1.amazonaws.com/ecs-ecr-repo:latest
       
-      - name: Update ECS Task Definition
+      - name: Check if ECS service exists
+        id: check-service
         run: |
-          aws ecs register-task-definition --cli-input-json file://task-def.json
+          aws ecs describe-services --cluster TestCluster --services s3-service >/dev/null 2>&1 || echo "::set-output name=exists::false"
 
-      - name: Update ECS Service
+      - name: Create or update ECS service
+        if: steps.check-service.outputs.exists == 'false'
         run: |
-          aws ecs update-service \
-            --cluster TestCluster \
-            --service s3-service \
-            --task-definition arn:aws:ecs:***:317327656978:task-definition/s3-interaction-task:7 \
-            --network-configuration "awsvpcConfiguration={subnets=[subnet-d9a085f8],securityGroups=[sg-a06034bc],assignPublicIp=ENABLED}"
+          aws ecs create-service --cluster TestCluster --service-name s3-service --task-definition s3-interaction-task --launch-type FARGATE --desired-count 1 --network-configuration "awsvpcConfiguration={subnets=[subnet-0f1aeda3182369e25],securityGroups=[sg-086f714fb49efe995],assignPublicIp=ENABLED}"
+        else
+          aws ecs update-service --cluster TestCluster --service s3-service --task-definition arn:aws:ecs:***:317327656978:task-definition/s3-interaction-task:7 --network-configuration "awsvpcConfiguration={subnets=[subnet-0f1aeda3182369e25],securityGroups=[sg-086f714fb49efe995],assignPublicIp=ENABLED}"
