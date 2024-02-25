@@ -3,7 +3,7 @@
     "networkMode": "awsvpc",
     "cpu": "256",
     "memory": "512",
-    "executionRoleArn": "ecsTaskExecutionRole",
+    "executionRoleArn": "arn:aws:iam::317327656978:role/s3-ecs-task-role",
     "containerDefinitions": [
         {
             "name": "s3-interaction-container",
@@ -20,6 +20,3 @@
         }
     ]
 }
-
-
-  
