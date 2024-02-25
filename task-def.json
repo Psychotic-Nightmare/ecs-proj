@@ -1,5 +1,9 @@
 {
     "family": "s3-interaction-task",
+    "networkMode": "awsvpc",
+    "cpu": "256",
+    "memory": "512",
+    "executionRoleArn": "ecsTaskExecutionRole",
     "containerDefinitions": [
         {
             "name": "s3-interaction-container",
@@ -16,5 +20,6 @@
         }
     ]
 }
+
 
   
