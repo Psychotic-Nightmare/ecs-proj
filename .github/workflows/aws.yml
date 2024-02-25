@@ -45,5 +45,5 @@ jobs:
         if: steps.check-service.outputs.exists == 'false'
         run: |
           aws ecs create-service --cluster TestCluster --service-name s3-service --task-definition s3-interaction-task --launch-type FARGATE --desired-count 1 --network-configuration "awsvpcConfiguration={subnets=[subnet-0f1aeda3182369e25],securityGroups=[sg-086f714fb49efe995],assignPublicIp=ENABLED}"
-        else
+          else
           aws ecs update-service --cluster TestCluster --service s3-service --task-definition arn:aws:ecs:***:317327656978:task-definition/s3-interaction-task:7 --network-configuration "awsvpcConfiguration={subnets=[subnet-0f1aeda3182369e25],securityGroups=[sg-086f714fb49efe995],assignPublicIp=ENABLED}"
