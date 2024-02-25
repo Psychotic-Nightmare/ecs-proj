@@ -40,6 +40,7 @@ jobs:
         run: |
           aws ecs register-task-definition --cli-input-json file://task-def.json
 
-      - name: Update ECS Service
+      - name: Create ECS Service
         run: |
-          aws ecs update-service --cluster TestCluster --service s3-service --task-definition s3-interaction-task
+          aws ecs create-service --cluster TestCluster --service-name s3-service --task-definition s3-interaction-task
+
