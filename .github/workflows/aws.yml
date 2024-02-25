@@ -25,7 +25,7 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -t my-app .
-      
+
       - name: Tag Docker image
         run: |
           echo "ECR Registry: ${{ secrets.AWS_ECR_REGISTRY }}"
@@ -37,11 +37,13 @@ jobs:
           docker push 317327656978.dkr.ecr.us-east-1.amazonaws.com/ecs-ecr-repo:latest
       
       - name: Update ECS Task Definition
-        id: update-task-definition
         run: |
-          task_definition=$(aws ecs register-task-definition --cli-input-json file://task-def.json)
-          echo "::set-output name=task-definition-arn::$(echo $task_definition | jq -r '.taskDefinition.taskDefinitionArn')"
-      
+          aws ecs register-task-definition --cli-input-json file://task-def.json
+
       - name: Update ECS Service
         run: |
-          aws ecs update-service --cluster TestCluster --service s3-service --task-definition ${{ steps.update-task-definition.outputs.task-definition-arn }}
+          aws ecs update-service \
+            --cluster TestCluster \
+            --service s3-service \
+            --task-definition arn:aws:ecs:***:317327656978:task-definition/s3-interaction-task:7 \
+            --network-configuration "awsvpcConfiguration={subnets=[subnet-0f1aeda3182369e25],securityGroups=[sg-086f714fb49efe995],assignPublicIp=ENABLED}"
