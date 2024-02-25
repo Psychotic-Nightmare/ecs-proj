@@ -28,11 +28,11 @@ jobs:
 
       - name: Tag Docker image
         run: |
-          docker tag my-app:latest ${{ secrets.AWS_ECR_REGISTRY }}/ecs-ecr-repo:latest
+          docker tag my-app:latest 317327656978.dkr.ecr.us-east-1.amazonaws.com/ecs-ecr-repo:latest
       
       - name: Push Docker image to Amazon ECR
         run: |
-          docker push ${{ secrets.AWS_ECR_REGISTRY }}/ecs-ecr-repo:latest
+          docker push 317327656978.dkr.ecr.us-east-1.amazonaws.com/ecs-ecr-repo:latest
       
       - name: Update ECS Task Definition
         run: |
