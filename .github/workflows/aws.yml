@@ -42,5 +42,6 @@ jobs:
 
       - name: Create ECS Service
         run: |
-          aws ecs create-service --cluster TestCluster --service-name s3-service --task-definition s3-interaction-task
+          aws ecs create-service --cluster TestCluster --service-name s3-service --task-definition s3-interaction-task --desired-count 1
+
 
