@@ -1,5 +1,5 @@
-# Use an official Node.js runtime as the base image
-FROM node:14
+# Use an official Node.js runtime as a minimal base image
+FROM node:14-alpine
 
 # Set the working directory in the container
 WORKDIR /usr/src/app
@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Install API dependencies
-RUN npm install
+RUN npm install --production
 
 # Copy the rest of the application code to the working directory
 COPY . .
