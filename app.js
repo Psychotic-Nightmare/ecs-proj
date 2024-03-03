@@ -31,13 +31,16 @@ app.post('/upload', upload.single('image'), (req, res) => {
 
     s3.upload(uploadParams, (err, data) => {
         if (err) {
-            console.error(err);
+            console.error('Error object:', err);
+            console.error('Error message:', err.message);
+            console.error('Error code:', err.code);
             return res.status(500).send('Failed to upload image');
         }
         res.send(`Image uploaded successfully. URL: ${data.Location}`);
     });
 });
 
+// Download endpoint
 // Download endpoint
 app.get('/download/:key', (req, res) => {
     const { key } = req.params;
@@ -48,10 +51,11 @@ app.get('/download/:key', (req, res) => {
 
     s3.getObject(downloadParams, (err, data) => {
         if (err) {
-            console.error(err);
+            console.error('Error object:', err);
+            console.error('Error message:', err.message);
+            console.error('Error code:', err.code);
             return res.status(500).send('Failed to download image');
         }
-        res.set('Content-Type', data.ContentType);
         res.send(data.Body);
     });
 });
