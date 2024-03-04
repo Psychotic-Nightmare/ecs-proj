@@ -41,7 +41,6 @@ app.post('/upload', upload.single('image'), (req, res) => {
 });
 
 // Download endpoint
-// Download endpoint
 app.get('/download/:key', (req, res) => {
     const { key } = req.params;
     const downloadParams = {

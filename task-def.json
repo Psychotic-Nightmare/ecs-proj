@@ -17,6 +17,12 @@
                     "hostPort": 80
                 }
             ],
+            "environment": [
+                {
+                    "name": "S3_BUCKET_NAME",
+                    "value": "ecs-bucket-test-1"
+                }
+            ],
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
