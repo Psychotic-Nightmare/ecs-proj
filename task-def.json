@@ -1,5 +1,6 @@
 {
     "family": "s3-interaction-task",
+    "taskRoleArn": "arn:aws:iam::317327656978:role/ecs-s3-task-role",
     "networkMode": "awsvpc",
     "cpu": "256",
     "memory": "512",
