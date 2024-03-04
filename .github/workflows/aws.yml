@@ -40,8 +40,7 @@ jobs:
         run: |
           aws ecs register-task-definition --cli-input-json file://task-def.json
       
-      - name: Create ECS service
-        id: register-task-definition
+      - name: Update ECS service
         run: |
-          TASK_DEFINITION=$(aws ecs register-task-definition --cli-input-json file://task-def.json | jq -r .taskDefinition.taskDefinitionArn)
-          aws ecs create-service --cluster TestCluster --service-name s3-service --task-definition $TASK_DEFINITION --launch-type FARGATE --desired-count 1 --network-configuration "awsvpcConfiguration={subnets=[subnet-d9a085f8],securityGroups=[sg-a06034bc],assignPublicIp=ENABLED}"
+          TASK_DEFINITION=$(aws ecs describe-task-definition --task-definition my-task-definition-family | jq -r .taskDefinition.taskDefinitionArn)
+          aws ecs update-service --cluster TestCluster --service s3-service --task-definition $TASK_DEFINITION --force-new-deployment
