@@ -42,5 +42,5 @@ jobs:
       
       - name: Update ECS service
         run: |
-          TASK_DEFINITION=$(aws ecs describe-task-definition --task-definition my-task-definition-family | jq -r .taskDefinition.taskDefinitionArn)
+          TASK_DEFINITION=$(aws ecs describe-task-definition --task-definition s3-interaction-task | jq -r .taskDefinition.taskDefinitionArn)
           aws ecs update-service --cluster TestCluster --service s3-service --task-definition $TASK_DEFINITION --force-new-deployment
